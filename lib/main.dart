@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:plus_money/routes/routes.dart';
 import 'package:plus_money/theme/theme.dart';
-import 'package:plus_money/widgets/widgets.dart';
 
 void main() => runApp(const PlusMoneyApp());
 
@@ -16,11 +14,8 @@ class PlusMoneyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '+Money',
       theme: lightTheme,
-      home: Scaffold(
-        body: Center(
-          child: CustomNavbar(),
-        ),
-      ),
+      initialRoute: 'home',
+      routes: appRoutes,
     );
   }
 }
