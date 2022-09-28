@@ -36,8 +36,7 @@ class CustomNavbar extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return ChangeNotifierProvider(
-      create: (_) => _MenuModel(),
+    return SafeArea(
       child: SizedBox(
         width: size.width,
         child: Row(
@@ -98,11 +97,11 @@ class _MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final menuModel = Provider.of<_MenuModel>(context);
+    final menuModel = Provider.of<MenuModel>(context);
 
     return GestureDetector(
       onTap: () {
-        Provider.of<_MenuModel>(context, listen: false).itemSeleccionado = i;
+        Provider.of<MenuModel>(context, listen: false).itemSeleccionado = i;
         item.onPressed();
       },
       behavior: HitTestBehavior.translucent,
@@ -115,7 +114,7 @@ class _MenuButton extends StatelessWidget {
   }
 }
 
-class _MenuModel with ChangeNotifier {
+class MenuModel with ChangeNotifier {
   int _itemSeleccionado = 0;
 
   int get itemSeleccionado => _itemSeleccionado;
