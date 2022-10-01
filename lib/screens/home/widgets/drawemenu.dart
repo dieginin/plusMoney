@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:plus_money/theme/theme.dart';
+import 'package:provider/provider.dart';
 
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu({super.key});
@@ -47,11 +49,11 @@ class DrawerMenu extends StatelessWidget {
               child: Column(
                 children: [
                   const DrawerTitulo('Empleados'),
-                  DrawerSubtitulo('Agregar empleados', onTap: () {}),
-                  DrawerSubtitulo('Editar empleados', onTap: () {}),
+                  DrawerSubtitulo('Agregar empleados', onTap: () => Navigator.pushNamed(context, 'agregar')),
+                  DrawerSubtitulo('Editar empleados', onTap: () => Navigator.pushNamed(context, 'editar')),
                   const DrawerTitulo('Salarios'),
-                  DrawerSubtitulo('Registrar préstamo', onTap: () {}),
-                  DrawerSubtitulo('Registrar salario', onTap: () {}),
+                  DrawerSubtitulo('Registrar préstamo', onTap: () => Navigator.pushNamed(context, 'prestamo')),
+                  DrawerSubtitulo('Registrar salario', onTap: () => Navigator.pushNamed(context, 'salario')),
                 ],
               ),
             ),
@@ -60,7 +62,7 @@ class DrawerMenu extends StatelessWidget {
               height: 65,
               alignment: Alignment.topRight,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () => Navigator.popAndPushNamed(context, 'settings'),
                 child: Icon(FontAwesomeIcons.gear, color: Theme.of(context).colorScheme.secondary),
               ),
             )
@@ -74,6 +76,8 @@ class DrawerMenu extends StatelessWidget {
 class _IdEquipo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context).currentTheme;
+
     return GestureDetector(
       onTap: () {
         Clipboard.setData(const ClipboardData(text: '3876432784'));
@@ -81,18 +85,18 @@ class _IdEquipo extends StatelessWidget {
           msg: "Copiado al portapapeles",
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.grey[350],
+          backgroundColor: theme == lightTheme ? Colors.grey[350] : Colors.grey[850],
           textColor: Theme.of(context).colorScheme.secondary,
         );
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Text('ID equipo:', style: TextStyle(color: Colors.black38)),
-          SizedBox(width: 10),
-          Text('3876432784', style: TextStyle(color: Colors.black38)),
-          SizedBox(width: 10),
-          Icon(FontAwesomeIcons.arrowUpRightFromSquare, size: 15, color: Colors.black38),
+        children: [
+          Text('ID equipo:', style: TextStyle(color: Theme.of(context).hintColor)),
+          const SizedBox(width: 10),
+          Text('3876432784', style: TextStyle(color: Theme.of(context).hintColor)),
+          const SizedBox(width: 10),
+          Icon(FontAwesomeIcons.arrowUpRightFromSquare, size: 15, color: Theme.of(context).hintColor),
         ],
       ),
     );
@@ -107,6 +111,8 @@ class DrawerSubtitulo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context).currentTheme;
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
@@ -115,11 +121,11 @@ class DrawerSubtitulo extends StatelessWidget {
         height: 48,
         child: Row(
           children: [
-            const Icon(Icons.subdirectory_arrow_right, color: Colors.black12),
+            Icon(Icons.subdirectory_arrow_right, color: theme == lightTheme ? Colors.black12 : Colors.white12),
             const SizedBox(width: 5),
             Text(subTitulo, style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
             const Spacer(),
-            const Icon(Icons.arrow_forward_ios, color: Colors.black12, size: 20),
+            Icon(Icons.arrow_forward_ios, color: theme == lightTheme ? Colors.black12 : Colors.white12, size: 20),
           ],
         ),
       ),
@@ -134,12 +140,12 @@ class DrawerTitulo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 15, top: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(left: 15, top: 10),
+          child: Text(
             titulo,
             style: TextStyle(
               color: Theme.of(context).colorScheme.secondary,
@@ -147,9 +153,9 @@ class DrawerTitulo extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Divider(),
-        ],
-      ),
+        ),
+        const Divider(),
+      ],
     );
   }
 }

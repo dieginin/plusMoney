@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:plus_money/screens/home/widgets/widgets.dart';
 import 'package:plus_money/widgets/widgets.dart';
+
+part 'balance.dart';
+part 'dashboard.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -11,7 +15,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       final seleccionado = Provider.of<MenuModel>(context).itemSeleccionado;
-      return seleccionado == 0 ? const Center(child: Text('Dashboard')) : const Center(child: Text('Balance General'));
+      return seleccionado == 0 ? const Dashboard() : const Balance();
     });
   }
 }

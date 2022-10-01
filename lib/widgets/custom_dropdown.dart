@@ -28,7 +28,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
         value: item,
         child: Text(
           item,
-          style: item == placeHolder ? TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w600) : null,
+          style: item == placeHolder ? TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w600) : null,
         ),
       ));
     }

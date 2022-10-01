@@ -35,6 +35,7 @@ dependencies:
   fluttertoast: ^8.0.9
   font_awesome_flutter: ^10.2.1
   provider: ^6.0.3
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_lints: ^2.0.0

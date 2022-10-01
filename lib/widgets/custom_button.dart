@@ -9,8 +9,8 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     this.icon = Icons.check,
-    this.heigh = 100,
-    this.width = 200,
+    this.heigh = 60,
+    this.width = 180,
     required this.onTap,
   });
 
@@ -21,19 +21,19 @@ class CustomButton extends StatelessWidget {
       child: Container(
         height: heigh,
         width: width,
-        decoration: decoration(context),
-        child: const Icon(
-          Icons.check,
+        decoration: decoration(context, icon),
+        child: Icon(
+          icon,
           color: Colors.white,
-          size: 50,
+          size: 40,
         ),
       ),
     );
   }
 
-  BoxDecoration decoration(BuildContext context) {
+  BoxDecoration decoration(BuildContext context, IconData icon) {
     return BoxDecoration(
-      color: Theme.of(context).colorScheme.primary,
+      color: icon == Icons.check ? Theme.of(context).primaryColor : Colors.redAccent,
       borderRadius: BorderRadius.circular(20),
     );
   }

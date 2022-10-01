@@ -59,18 +59,20 @@ class _MenuBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: decoration(),
+      decoration: decoration(context),
       width: 300,
       height: 60,
       child: child,
     );
   }
 
-  BoxDecoration decoration() {
+  BoxDecoration decoration(context) {
+    final theme = Provider.of<ThemeChanger>(context).currentTheme;
+
     return BoxDecoration(
-      color: Colors.white,
+      color: theme == lightTheme ? Colors.white : Colors.grey[900],
       borderRadius: BorderRadius.circular(100),
-      boxShadow: const [BoxShadow(blurRadius: 10, spreadRadius: -2, color: Colors.black38)],
+      boxShadow: [BoxShadow(blurRadius: 10, spreadRadius: -2, color: Theme.of(context).hintColor)],
     );
   }
 }
@@ -108,7 +110,7 @@ class _MenuButton extends StatelessWidget {
       child: Icon(
         item.icon,
         size: menuModel.itemSeleccionado == i ? 30 : 20,
-        color: menuModel.itemSeleccionado == i ? lightTheme.colorScheme.primary : const Color(0xff607D8B),
+        color: menuModel.itemSeleccionado == i ? Theme.of(context).primaryColor : const Color(0xff607D8B),
       ),
     );
   }

@@ -7,4 +7,8 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'login': (_) => const SettingsScreen(),
   'register': (_) => const SettingsScreen(),
   'settings': (_) => const SettingsScreen(),
+  'prestamo': (_) => const PrestamoScreen(),
+  'salario': (_) => const SalarioScreen(),
+  'agregar': (_) => const AgregarEmpleadoScreen(),
+  'editar': (_) => const EditarEmpleadoScreen(),
 };
