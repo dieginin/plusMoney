@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const PlusMoneyApp());
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:plus_money/blocs/bloc.dart';
+import 'package:plus_money/routes/routes.dart';
+import 'package:plus_money/services/mongodb.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await MongoDatabase.connect();
+
+  runApp(const PlusMoneyApp());
+}
 
 class PlusMoneyApp extends StatelessWidget {
   const PlusMoneyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '+Money',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => UsuarioBloc()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: '+Money',
+        initialRoute: 'home',
+        routes: appRoutes,
       ),
     );
   }
