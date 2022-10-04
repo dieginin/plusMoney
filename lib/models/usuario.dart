@@ -1,33 +1,42 @@
-import 'package:mongo_dart/mongo_dart.dart';
+import 'dart:convert';
+
+import 'package:provider/provider.dart';
+
+import 'package:plus_money/services/services.dart';
+
+Usuario usuarioFromMap(String str) => Usuario.fromMap(json.decode(str));
+
+String usuarioToMap(Usuario data) => json.encode(data.toMap());
 
 class Usuario {
   final String nombre;
-  final String email;
-  final ObjectId uid;
+  final String usuario;
   final String eid;
+  final String uid;
 
   Usuario({
     required this.nombre,
-    required this.email,
-    required this.uid,
+    required this.usuario,
     required this.eid,
+    required this.uid,
   });
+
+  factory Usuario.fromMap(Map<String, dynamic> json) => Usuario(
+        nombre: json["nombre"],
+        usuario: json["usuario"],
+        eid: json["eid"],
+        uid: json["uid"],
+      );
 
   Map<String, dynamic> toMap() => {
         "nombre": nombre,
-        "email": email,
-        "_id": uid,
+        "usuario": usuario,
         "eid": eid,
+        "uid": uid,
       };
 
-  factory Usuario.fromMap(Map<String, dynamic> map) => Usuario(
-        nombre: map["nombre"],
-        email: map["email"],
-        uid: map["_id"],
-        eid: map["eid"],
-      );
-
-  String iniciales(Usuario usuario) {
+  String iniciales(context) {
+    Usuario usuario = Provider.of<AuthService>(context).usuario!;
     final splited = usuario.nombre.split(' ');
     return (usuario.nombre.contains(' ')) ? splited[0][0] + splited[1][0] : usuario.nombre[0] + usuario.nombre[1].toUpperCase();
   }
