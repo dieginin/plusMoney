@@ -29,7 +29,7 @@ const crearUsuario = async (req, res = response) => {
 
         res.json({
         ok: true,
-        user,
+        usuario: user,
         token
         });
 
@@ -39,7 +39,37 @@ const crearUsuario = async (req, res = response) => {
             ok: false,
             msg: 'Habla con el administrador'
         });
-    } 
+    }
+}
+
+const actualizarUsuario = async (req, res = response) => {
+    const { uid, nombre, usuario, password } = req.body;
+    const update = {};
+
+    if ( nombre != undefined ) update.nombre = nombre;
+    if ( usuario != undefined ) update.usuario = usuario;
+    if ( password != undefined ) {
+        const salt = bcrypt.genSaltSync();
+        update.password = bcrypt.hashSync(password, salt);
+    }
+
+    try {
+        usr = await Usuario.updateOne({ uid }, update);
+
+        res.json({
+        ok: true,
+        usuario: req.body,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            msg: 'Habla con el administrador'
+        });
+    }
+
+    
 }
 
 const login = async (req, res = response) => {
@@ -69,7 +99,7 @@ const login = async (req, res = response) => {
 
         res.json({
             ok: true,
-            usuarioDB,
+            usuario: usuarioDB,
             token
         });
         
@@ -90,13 +120,14 @@ const renewToken = async (req, res = response) => {
 
     res.json({
         ok: true,
-        usuario,
+        usuario: usuario,
         token
     })
 }
 
 module.exports = {
     crearUsuario,
+    actualizarUsuario,
     login,
     renewToken
 }
