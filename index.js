@@ -22,6 +22,7 @@ app.use(express.static(publicPath));
 
 // Mis Rutas
  app.use('/api/login', require('./routes/auth'));
+ app.use('/api/employee', require('./routes/employee'));
 
 // Definir puerto y env
 server.listen(process.env.PORT, (err) => {

@@ -8,7 +8,7 @@ const crearUsuario = async (req, res = response) => {
     const { usuario, password } = req.body;
 
     try {
-        const existeUsuario = await Usuario.findOne({usuario});
+        const existeUsuario = await Usuario.findOne({ usuario: usuario });
         if(existeUsuario) {
             return res.status(400).json({
                 ok: false,
@@ -54,7 +54,7 @@ const actualizarUsuario = async (req, res = response) => {
     }
 
     try {
-        usr = await Usuario.updateOne({ uid }, update);
+        usr = await Usuario.updateOne({ _id: uid }, update);
 
         res.json({
         ok: true,
@@ -76,7 +76,7 @@ const login = async (req, res = response) => {
     const { usuario, password } = req.body;
 
     try {
-        const usuarioDB = await Usuario.findOne({usuario});
+        const usuarioDB = await Usuario.findOne({ usuario: usuario });
 
         if (!usuarioDB) {
             return res.status(404).json({
