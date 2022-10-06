@@ -3,9 +3,28 @@ const bcrypt = require('bcryptjs');
 
 const Empleado = require("../models/empleado");
 
+const empleados = async (req, res = response) => {
+    const { eid } = req.body;
+
+    try {
+        emplo = await Empleado.find({eid});
+
+        res.json({
+        ok: true,
+        empleados: emplo,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            msg: 'Habla con el administrador'
+        });
+    }
+}
+
 const crearEmpleado = async (req, res = response) => {
     const { nombre } = req.body;
-    console.log(nombre);
 
     try {
         if(await Empleado.findOne({nombre})) {
@@ -61,6 +80,7 @@ const actualizarEmpleado = async (req, res = response) => {
 }
 
 module.exports = {
+    empleados,
     crearEmpleado,
     actualizarEmpleado
 }

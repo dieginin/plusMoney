@@ -7,10 +7,12 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { crearEmpleado, actualizarEmpleado } = require('../controllers/employee');
+const { empleados, crearEmpleado, actualizarEmpleado } = require('../controllers/employee');
 const { validarCampos } = require('../middlewares/validar-campos');
 
 const router = Router();
+
+router.post('/', empleados);
 
 router.post('/new', [
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
