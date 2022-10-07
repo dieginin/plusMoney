@@ -1,5 +1,4 @@
 const { response } = require("express");
-const bcrypt = require('bcryptjs');
 
 const Empleado = require("../models/empleado");
 
@@ -80,12 +79,12 @@ const actualizarEmpleado = async (req, res = response) => {
     if ( deuda != undefined ) update.deuda = deuda;
 
     try {
-        await Empleado.updateOne({ _id: uid }, update);
-
-        res.json({
-            ok: true,
-            empleado: req.body,
-        });
+        if (await Empleado.updateOne({ _id: uid }, update)) {
+            return res.json({
+                ok: true,
+                empleado: req.body,
+            });
+        }
 
     } catch (error) {
         console.log(error);
@@ -94,8 +93,6 @@ const actualizarEmpleado = async (req, res = response) => {
             msg: 'Habla con el administrador'
         });
     }
-
-    
 }
 
 module.exports = {
