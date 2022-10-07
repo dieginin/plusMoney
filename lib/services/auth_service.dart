@@ -54,7 +54,43 @@ class AuthService with ChangeNotifier {
       final loginResponse = loginResponseFromMap(resp.body);
       usuario = loginResponse.usuario;
 
-      await _guardarToken(loginResponse.token);
+      await _guardarToken(loginResponse.token!);
+      return true;
+    }
+    final respBody = jsonDecode(resp.body);
+    return respBody['msg'];
+  }
+
+  Future update(Usuario usr, String uid, String nombre, String user, String password) async {
+    autenticando = true;
+
+    if (nombre.isEmpty) nombre = usr.nombre;
+    if (nombre.isNotEmpty) nombre = _capitalizeAllWord(nombre);
+    if (user.isEmpty) user = usr.usuario;
+
+    final data = {
+      'uid': uid,
+      'nombre': nombre,
+      'usuario': user,
+      'eid': usr.eid,
+    };
+
+    if (password.isNotEmpty) data.addAll({'password': password});
+
+    final uri = Uri.parse('${Environment.apiUrl}/login/update');
+    final resp = await http.post(
+      uri,
+      body: jsonEncode(data),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    autenticando = false;
+
+    if (resp.statusCode == 200) {
+      final updateResponse = loginResponseFromMap(resp.body);
+      usuario = updateResponse.usuario;
+      notifyListeners();
+
       return true;
     }
     final respBody = jsonDecode(resp.body);
@@ -93,7 +129,7 @@ class AuthService with ChangeNotifier {
     if (resp.statusCode == 200) {
       final registerResponse = loginResponseFromMap(resp.body);
       usuario = registerResponse.usuario;
-      await _guardarToken(registerResponse.token);
+      await _guardarToken(registerResponse.token!);
 
       return true;
     }
@@ -117,7 +153,7 @@ class AuthService with ChangeNotifier {
       final loginResponse = loginResponseFromMap(resp.body);
       usuario = loginResponse.usuario;
 
-      await _guardarToken(loginResponse.token);
+      await _guardarToken(loginResponse.token!);
       return true;
     }
     deleteToken();
@@ -126,6 +162,11 @@ class AuthService with ChangeNotifier {
 
   Future _guardarToken(String token) async {
     return await _storage.write(key: 'token', value: token);
+  }
+
+  Future logout(context) async {
+    await _storage.delete(key: 'token');
+    Navigator.pushReplacementNamed(context, 'login');
   }
 
   String _capitalizeAllWord(String value) {

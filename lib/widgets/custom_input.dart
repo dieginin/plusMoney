@@ -4,17 +4,24 @@ class CustomInput extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final bool obscureText;
+  final bool isMoney;
+  final bool isLogin;
+  final bool readOnly;
 
   const CustomInput({
     super.key,
     required this.controller,
-    required this.label,
+    this.label = '',
     this.obscureText = false,
+    this.isMoney = false,
+    this.isLogin = false,
+    this.readOnly = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: !readOnly,
       controller: controller,
       obscureText: obscureText,
       textAlign: TextAlign.center,
@@ -25,7 +32,8 @@ class CustomInput extends StatelessWidget {
 
   InputDecoration decoration(context, label) {
     return InputDecoration(
-      isDense: true,
+      isDense: isLogin,
+      prefixIcon: isMoney ? const Icon(Icons.attach_money) : null,
       hintText: label,
       border: UnderlineInputBorder(
         borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),

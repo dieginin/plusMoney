@@ -37,6 +37,7 @@ class Usuario {
 
   String iniciales(context) {
     Usuario usuario = Provider.of<AuthService>(context).usuario!;
+
     final splited = usuario.nombre.split(' ');
     return (usuario.nombre.contains(' ')) ? splited[0][0] + splited[1][0] : usuario.nombre[0] + usuario.nombre[1].toUpperCase();
   }

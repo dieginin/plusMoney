@@ -9,12 +9,12 @@ String loginResponseToMap(LoginResponse data) => json.encode(data.toMap());
 class LoginResponse {
   final bool ok;
   final Usuario usuario;
-  final String token;
+  final String? token;
 
   LoginResponse({
     required this.ok,
     required this.usuario,
-    required this.token,
+    this.token,
   });
 
   factory LoginResponse.fromMap(Map<String, dynamic> json) => LoginResponse(

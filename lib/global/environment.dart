@@ -5,4 +5,5 @@ const defhost = 'http://10.0.2.2:3000';
 
 class Environment {
   static String apiUrl = Platform.isAndroid ? '$defhost/api' : '$localhost/api';
+  static String socketUrl = Platform.isAndroid ? defhost : localhost;
 }

@@ -58,23 +58,26 @@ class _LoginForm extends StatelessWidget {
           CustomInput(
             controller: nombreCtrl,
             label: 'Nombre',
+            isLogin: true,
           ),
           const SizedBox(height: 15),
           CustomInput(
             controller: userCtrl,
             label: 'Usuario',
+            isLogin: true,
           ),
           const SizedBox(height: 15),
           CustomInput(
             controller: passCtrl,
             label: 'Contraseña',
             obscureText: true,
+            isLogin: true,
           ),
           const SizedBox(height: 15),
           CustomInput(
             controller: eidCtrl,
             label: 'ID de equipo*',
-            obscureText: true,
+            isLogin: true,
           ),
           const SizedBox(height: 50),
           ElevatedButton(

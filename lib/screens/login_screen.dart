@@ -49,6 +49,8 @@ class _LoginForm extends StatelessWidget {
     final userCtrl = TextEditingController();
     final passCtrl = TextEditingController();
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
+    final empleadosService = Provider.of<EmpleadosService>(context);
 
     return Form(
       child: Column(
@@ -56,12 +58,14 @@ class _LoginForm extends StatelessWidget {
           CustomInput(
             controller: userCtrl,
             label: 'Usuario',
+            isLogin: true,
           ),
           const SizedBox(height: 40),
           CustomInput(
             controller: passCtrl,
             label: 'Contraseña',
             obscureText: true,
+            isLogin: true,
           ),
           const SizedBox(height: 50),
           ElevatedButton(
@@ -79,6 +83,9 @@ class _LoginForm extends StatelessWidget {
                     if (!mounted) return;
 
                     if (loginOk == true) {
+                      socketService.connect();
+                      empleadosService.getUsuarios(authService.usuario!.eid);
+
                       Navigator.pushReplacementNamed(context, 'home');
                     } else {
                       loginOk ??= 'Llene todos los campos';

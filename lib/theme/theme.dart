@@ -7,8 +7,9 @@ class AppTheme {
 
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    scaffoldBackgroundColor: colors.blanco,
     hintColor: Colors.black38,
+    primaryColor: colors.primario,
+    scaffoldBackgroundColor: colors.blanco,
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: colors.secundario,
     ),
