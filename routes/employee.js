@@ -7,7 +7,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { empleados, crearEmpleado, actualizarEmpleado } = require('../controllers/employee');
+const { empleados, crearEmpleado, actualizarEmpleado, eliminarEmpleado } = require('../controllers/employee');
 const { validarCampos } = require('../middlewares/validar-campos');
 
 const router = Router();
@@ -22,6 +22,8 @@ router.post('/new', [
 ], crearEmpleado);
 
 router.post('/update', actualizarEmpleado);
+
+router.post('/delete', eliminarEmpleado);
 
 
 module.exports = router;

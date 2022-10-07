@@ -52,6 +52,25 @@ const crearEmpleado = async (req, res = response) => {
     }
 }
 
+const eliminarEmpleado = async (req, res = response) => {
+    const { uid } = req.body;
+
+    try {
+        await Empleado.findOneAndRemove({_id: uid});
+
+        res.json({
+        ok: true,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            msg: 'Habla con el administrador'
+        });
+    }
+}
+
 const actualizarEmpleado = async (req, res = response) => {
     const { uid, nombre, salario, deuda } = req.body;
     const update = {};
@@ -82,5 +101,6 @@ const actualizarEmpleado = async (req, res = response) => {
 module.exports = {
     empleados,
     crearEmpleado,
-    actualizarEmpleado
+    actualizarEmpleado,
+    eliminarEmpleado
 }
